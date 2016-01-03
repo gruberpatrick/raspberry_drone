@@ -13,6 +13,7 @@ if(sTest == "rotation"){
 	setInterval(function(){
 	  var oData = mpu6050.getRotation();
  	 	console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
+ 	 	console.log(mpu6050.getRotationOffset());
 	}, 100);
 
 }else if(sTest == "acceleration"){
@@ -25,6 +26,8 @@ if(sTest == "rotation"){
 
 }else if(sTest == "compass"){
 	
+	// TODO:
+	// implement
 	console.log("[SENSOR] check compass");
 	setInterval(function(){
 		var oData = mpu6050.getCompass();
@@ -33,6 +36,8 @@ if(sTest == "rotation"){
 
 }else if(sTest == "barometer"){
 
+  // TODO:
+  // implement
 	console.log("[SENSOR] check barometer");
 	ms5611.init(1);
 	console.log(ms5611.getAltitude());
