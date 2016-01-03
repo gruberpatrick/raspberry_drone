@@ -1,17 +1,17 @@
-var s = require("./mpu6050");
-var ms5611 = require("./ms5611");
+var mpu6050 = require("../lib/mpu6050");
+var ms5611 = require("../lib/ms5611");
 var oWebSocket = require("ws").Server;
 
 var sTest = process.argv[2];
 
-s.init(1);
+mpu6050.init(1);
 
 if(sTest == "rotation"){
 
 	console.log("[SENSOR] check rotation");
-	setTimeout(s.setZero.bind(s), 1000);
+	setTimeout(mpu6050.setZero.bind(mpu6050), 1000);
 	setInterval(function(){
-	  var oData = s.getRotation();
+	  var oData = mpu6050.getRotation();
  	 	console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
 	}, 100);
 
@@ -19,7 +19,7 @@ if(sTest == "rotation"){
 	
 	console.log("[SENSOR] check acceleration");
 	setInterval(function(){
-		var oData = s.getAcceleration();
+		var oData = mpu6050.getAcceleration();
 		console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
 	}, 100);
 
@@ -27,7 +27,7 @@ if(sTest == "rotation"){
 	
 	console.log("[SENSOR] check compass");
 	setInterval(function(){
-		var oData = s.getCompass();
+		var oData = mpu6050.getCompass();
 		console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
 	}, 100);
 
@@ -50,8 +50,8 @@ if(sTest == "rotation"){
 	});
 
 	setInterval(function(){
-		var oDegree = s.getRotationDegree();
-		var oAcceleration = s.getAccelerationPercentage();
+		var oDegree = mpu6050.getRotationDegree();
+		var oAcceleration = mpu6050.getAccelerationPercentage();
 		if(oConnected != null){
 			try{
 				oConnected.send(JSON.stringify({degree:oDegree,acceleration:oAcceleration}));
