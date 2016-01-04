@@ -13,7 +13,6 @@ if(sTest == "rotation"){
 	setInterval(function(){
 	  var oData = mpu6050.getRotation();
  	 	console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
- 	 	console.log(mpu6050.getRotationOffset());
 	}, 100);
 
 }else if(sTest == "acceleration"){
@@ -24,6 +23,11 @@ if(sTest == "rotation"){
 		console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
 	}, 100);
 
+}else if(sTest == "temperature"){
+
+  console.log("[SENSOR] check temperature");
+  console.log(mpu6050.getTemperature());
+  
 }else if(sTest == "compass"){
 	
 	// TODO:
