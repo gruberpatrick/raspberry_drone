@@ -7,7 +7,7 @@ aESC[3] = require("../lib/esc");
 
 // initialize ESC's
 console.log("[ESC] initializing");
-aESC[0].init(1, 35);
+aESC[0].init(1, 23);
 
 setTimeout(aESC[0].startFull, 1000);
 
