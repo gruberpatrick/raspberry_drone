@@ -13,7 +13,9 @@ aESC[2].init(3, parseInt(process.argv[4]));
 aESC[3].init(4, parseInt(process.argv[5]));
 
 while(!aESC[3].bReady){} // wait for last ESC to be activated
+console.log("[ESC] initialized");
 
 for(var lIndex in aESC) aESC[lIndex].setPWM(1300);
+console.log("[ESC] all ESC's set to normal flying speed");
 
 while(1){} // let the program run
