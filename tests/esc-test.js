@@ -12,6 +12,7 @@ aESC[1].init(2, parseInt(process.argv[3]));
 aESC[2].init(3, parseInt(process.argv[4]));
 aESC[3].init(4, parseInt(process.argv[5]));
 
+console.log("[ESC] waiting...");
 while(!aESC[3].bReady){} // wait for last ESC to be activated
 console.log("[ESC] initialized");
 
