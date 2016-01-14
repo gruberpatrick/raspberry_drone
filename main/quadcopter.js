@@ -38,9 +38,9 @@ function Quadcopter(){
     console.log("[QUADCOPTER] command:");
     console.log(aPieces);
     if(aPieces[0] == "up")
-      aPieces.length == 2 ? this.ascend(aPieces[1]) : this.ascend();
+      aPieces.length == 2 ? this.ascend(parseInt(aPieces[1])) : this.ascend();
     else if(aPieces[0] == "down")
-      aPieces.length == 2 ? this.descend(aPieces[1]) : this.descend();
+      aPieces.length == 2 ? this.descend(parseInt(aPieces[1])) : this.descend();
     else if(aPieces[0] == "hover")
       this.hover();
       

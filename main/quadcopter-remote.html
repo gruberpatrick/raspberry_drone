@@ -31,10 +31,10 @@
         // initialize remote
         this.initialize = function(){
           this.oWS = new WebSocket("ws://192.168.1.16:4444");
-          this.oWS.onopened = function(){
+          this.oWS.onopen = function(){
             this.sendSignal("up=1230");
             this.bReady = true;
-          };
+          }.bind(this);
         };
         
         // FUNCTION
