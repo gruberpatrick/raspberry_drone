@@ -7,7 +7,7 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 // ###############################################################################
 function Quadcopter(){
 
-  // FUNCTION
+  // FUNCTION -----------------------------------------------------------------
   // initialize quadcopter
   this.initialize = function(){
     // initialize ESC's

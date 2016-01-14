@@ -2,20 +2,37 @@
 <html>
   <head>
     <title>QUADCOPTER REMOTE</title>
+    <style type="text/css">
+      body{position:relative;background:#111;}
+      #content{position:absolute;left:0;top:0;width:100%;height:100%;}
+      #esc{margin:20px;width:100px;height:400px;background:#222;position:relative;padding:0;}
+      #esc_control{position:absolute;left:0;width:100%;height:40px;background:#b81111;bottom:0;margin-bottom:-20px;}
+    </style>
   </head>
   
   <body>
+    
+    <div id="content">
+      
+      <div id="esc">
+        <div id="esc_control"></div>
+      </div>
+      
+    </div>
+    
     <script type="text/javascript">      
       function QuadcopterRemote(){
         
+        // ATTRIBUTES -----------------------------------------------------------------
         this.bReady = false;
         this.oWS = null;
         
-        // FUNCTION
+        // FUNCTION -----------------------------------------------------------------
         // initialize remote
         this.initialize = function(){
           this.oWS = new WebSocket("ws://192.168.1.16:4444");
-          this.oWS.onopen = function(){
+          this.oWS.onopened = function(){
+            this.sendSignal("up=1230");
             this.bReady = true;
           };
         };
@@ -40,9 +57,9 @@
           //return;
         console.log("sending");
         if(oEvent.keyIdentifier == "PageUp"){
-          QR.sendSignal("up=1300");
+          QR.sendSignal("up");
         }else if(oEvent.keyIdentifier == "PageDown"){
-          QR.sendSignal("down=1000");
+          QR.sendSignal("down");
         }
       };
     </script>

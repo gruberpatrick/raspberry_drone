@@ -4,9 +4,10 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 // ###############################################################################
 function DroneServer(){
 
+  // ATTRIBUTES -----------------------------------------------------------------
   this.sDroneKey = "";
   
-  // FUNCTION
+  // FUNCTION -----------------------------------------------------------------
   // initialize drone server
   this.initialize = function(){
     oNetwork.oSocket.initializeWebSocket(4444, function(oWS){
