@@ -8,20 +8,20 @@ mpu6050.init(1);
 
 if(sTest == "rotation"){
 
-	console.log("[SENSOR] check rotation");
-	setTimeout(mpu6050.setZero.bind(mpu6050), 1000);
-	setInterval(function(){
-	  var oData = mpu6050.getRotation();
- 	 	console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
-	}, 100);
+  console.log("[SENSOR] check rotation");
+  setTimeout(mpu6050.setZero.bind(mpu6050), 1000);
+  setInterval(function(){
+    var oData = mpu6050.getRotation();
+      console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
+  }, 100);
 
 }else if(sTest == "acceleration"){
-	
-	console.log("[SENSOR] check acceleration");
-	setInterval(function(){
-		var oData = mpu6050.getAcceleration();
-		console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
-	}, 100);
+  
+  console.log("[SENSOR] check acceleration");
+  setInterval(function(){
+    var oData = mpu6050.getAcceleration();
+    console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
+  }, 100);
 
 }else if(sTest == "temperature"){
 
@@ -29,45 +29,45 @@ if(sTest == "rotation"){
   console.log(mpu6050.getTemperature());
   
 }else if(sTest == "compass"){
-	
-	// TODO:
-	// implement
-	console.log("[SENSOR] check compass");
-	setInterval(function(){
-		var oData = mpu6050.getCompass();
-		console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
-	}, 100);
+  
+  // TODO:
+  // implement
+  console.log("[SENSOR] check compass");
+  setInterval(function(){
+    var oData = mpu6050.getCompass();
+    console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
+  }, 100);
 
 }else if(sTest == "barometer"){
 
   // TODO:
   // implement
-	console.log("[SENSOR] check barometer");
-	ms5611.init(1);
-	console.log(ms5611.getAltitude());
+  console.log("[SENSOR] check barometer");
+  ms5611.init(1);
+  console.log(ms5611.getAltitude());
 
 }else if(sTest == "live"){
 
-	console.log("[SENSOR] live connection");
-	var wss = new oWebSocket({port: 3333});
-	var oConnected = null;
-	wss.on('connection', function connection(ws) {
-		oConnected = ws;
-		ws.on('message', function incoming(message) {
-    	console.log('received: %s', message);
-  	});
-	});
+  console.log("[SENSOR] live connection");
+  var wss = new oWebSocket({port: 3333});
+  var oConnected = null;
+  wss.on('connection', function connection(ws) {
+    oConnected = ws;
+    ws.on('message', function incoming(message) {
+      console.log('received: %s', message);
+    });
+  });
 
-	setInterval(function(){
-		var oDegree = mpu6050.getRotationDegree();
-		var oAcceleration = mpu6050.getAccelerationPercentage();
-		if(oConnected != null){
-			try{
-				oConnected.send(JSON.stringify({degree:oDegree,acceleration:oAcceleration}));
-			}catch(e){
-				
-			}
-		}
-	}, 10);
+  setInterval(function(){
+    var oDegree = mpu6050.getRotationDegree();
+    var oAcceleration = mpu6050.getAccelerationPercentage();
+    if(oConnected != null){
+      try{
+        oConnected.send(JSON.stringify({degree:oDegree,acceleration:oAcceleration}));
+      }catch(e){
+        
+      }
+    }
+  }, 10);
 
 }

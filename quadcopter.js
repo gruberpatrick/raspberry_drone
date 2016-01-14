@@ -1,30 +1,19 @@
-// create ESC objects
-var aESC = [];
-aESC[0] = [require("./lib/esc"), 9];
-aESC[1] = [require("./lib/esc"), 7];
-aESC[2] = [require("./lib/esc"), 23];
-aESC[3] = [require("./lib/esc"), 19];
-
-// include sensors
+// create ESC object and sensors
+var oESC = require("./lib/esc");
 var oMPU6050 = require("./lib/mpu6050");
 var oMS5611 = require("./lib/ms5611");
-
 // include websocket for external controls
 var oWS = require("ws");
 
-// initialize each ESC
+// initialize ESC's
 console.log("[QUADCOPTER] initialize");
-for(var lIndex in aESC){ aESC[lIndex][0].init(lIndex, aESC[lIndex][1]); }
+oESC.init([9,7,23,19]);
 
 // test ESC's
 console.log("[QUADCOPTER] send signal to ESC's for 5 seconds");
 var lCount = 0;
-setInterval(function(){
-  aESC[lCount++][0].setPWM(1240);
-}, 100);
-/*for(var lIndex in aESC){ aESC[lIndex][0].setPWM(1240); }
-
+oESC.setAllPWM(1240);
 setTimeout(function(){
-  for(var lIndex in aESC){ aESC[lIndex][0].setPWM(1000); }
+  oESC.setAllPWM(1000);
 }, 5000);
-console.log("[QUADCOPTER] was the test succesful? (Y/n)");*/
+console.log("[QUADCOPTER] was the test succesful? (Y/n)");
