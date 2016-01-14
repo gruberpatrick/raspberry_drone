@@ -1,9 +1,9 @@
 // create ESC object and sensors
-var oESC = require("./lib/esc");
-var oMPU6050 = require("./lib/mpu6050");
-var oMS5611 = require("./lib/ms5611");
+var oESC = require("../lib/esc");
+var oMPU6050 = require("../lib/mpu6050");
+var oMS5611 = require("../lib/ms5611");
 // include networking components
-var oNetwork = require("./lib/HandyJS/lib/network-p");
+var oNetwork = require("../lib/HandyJS/lib/network-p");
 
 // initialize ESC's
 console.log("[QUADCOPTER] initialize");
