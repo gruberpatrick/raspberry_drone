@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QUADCOPTER REMOTE</title>
+  </head>
+  
+  <body>
+    <script type="text/javascript">      
+      function QuadcopterRemote(){
+        
+        this.bReady = false;
+        this.oWS = null;
+        
+        // FUNCTION
+        // initialize remote
+        this.initialize = function(){
+          this.oWS = new WebSocket("ws://192.168.1.16:4444");
+          this.oWS.onopen = function(){
+            this.bReady = true;
+          };
+        };
+        
+        this.sendSignal = function(sCommand){
+          this.oWS.send(JSON.stringify({"sType":"command", "sCommand":sCommand}));
+        };
+        
+        // CONSTRUCTOR
+        // fake constructor call
+        this.initialize();
+        
+      }
+      
+      var QR = new QuadcopterRemote();
+      
+      // catch keyboard events
+      document.onkeydown = function(oEvent){
+        if(!QR.bReady)
+          return;
+        if(oEvent.keyIdentifier == "PageUp"){
+          QR.sendSignal("up");
+        }else if(oEvent.keyIdentifier == "PageDown"){
+          QR.sendSignal("down");
+        }
+      };
+    </script>
+  </body>
+</html>
