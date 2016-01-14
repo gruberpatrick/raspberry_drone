@@ -18,8 +18,13 @@ for(var lIndex in aESC){ aESC[lIndex][0].init(lIndex, aESC[lIndex][1]); }
 
 // test ESC's
 console.log("[QUADCOPTER] send signal to ESC's for 5 seconds");
-for(var lIndex in aESC){ aESC[lIndex][0].setPWM(1240); }
+var lCount = 0;
+setInterval(function(){
+  aESC[lCount++][0].setPWM(1240);
+}, 100);
+/*for(var lIndex in aESC){ aESC[lIndex][0].setPWM(1240); }
+
 setTimeout(function(){
   for(var lIndex in aESC){ aESC[lIndex][0].setPWM(1000); }
 }, 5000);
-console.log("[QUADCOPTER] was the test succesful? (Y/n)");
+console.log("[QUADCOPTER] was the test succesful? (Y/n)");*/
