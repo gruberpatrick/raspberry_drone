@@ -9,23 +9,7 @@ var oNetwork = require("./lib/HandyJS/lib/network-p");
 console.log("[QUADCOPTER] initialize");
 oESC.init([9,7,23,19]); // initialize ESC's on given GPIO's
 
-// test ESC's #####################
-/*function initTest(){
-  var lSpeed = 1250;
-  oESC.setAllPWM(lSpeed);
-  var oInterval = setInterval(function(){
-    console.log("[QUADCOPTER] setting speed to: " + lSpeed);
-    oESC.setAllPWM(lSpeed);
-    lSpeed += 5;
-    if(lSpeed == 2000){
-      lSpeed = 1000;
-      oESC.setAllPWM(lSpeed);
-      clearInterval(oInterval);
-    }
-  }, 100);
-}*/
-// initTest(); ####################
-
+// connect to server and identify
 oNetwork.oSocket.connectWebSocket("192.168.1.16", 4444, function(){
   // connected to server
   console.log("[QUADCOPTER] connected to server");
@@ -37,7 +21,6 @@ oNetwork.oSocket.connectWebSocket("192.168.1.16", 4444, function(){
   // error
   console.log(oErr);
 });
-
-
+oNetwork.serverSend(JSON.stringify({init:true,sType:"quadcopter"}));
 
 
