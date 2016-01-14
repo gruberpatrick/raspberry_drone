@@ -1,10 +1,10 @@
-// create ESC object and sensors
+// include components
 var oESC = require("../lib/esc");
 var oMPU6050 = require("../lib/mpu6050");
 var oMS5611 = require("../lib/ms5611");
-// include networking components
 var oNetwork = require("../lib/HandyJS/lib/network-p");
 
+// ###############################################################################
 function Quadcopter(){
 
   // initialize quadcopter
@@ -26,6 +26,11 @@ function Quadcopter(){
       console.log(oErr);
     });
   };
+  
+  // fake constructor
+  this.initialize();
 
 }
+
+var Q = new Quadcopter();
 
