@@ -18,7 +18,7 @@ function initTest(){
     oESC.setAllPWM(lSpeed);
     lSpeed += 5;
     if(lSpeed == 2000){
-      lSpeed = 1250;
+      lSpeed = 1000;
       oESC.setAllPWM(lSpeed);
       clearInterval(oInterval);
     }
