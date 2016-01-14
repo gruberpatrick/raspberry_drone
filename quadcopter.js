@@ -1,13 +1,13 @@
 // create ESC objects
 var aESC = [];
-aESC[0] = [require("lib/esc"), 9];
-aESC[1] = [require("lib/esc"), 7];
-aESC[2] = [require("lib/esc"), 23];
-aESC[3] = [require("lib/esc"), 19];
+aESC[0] = [require("./lib/esc"), 9];
+aESC[1] = [require("./lib/esc"), 7];
+aESC[2] = [require("./lib/esc"), 23];
+aESC[3] = [require("./lib/esc"), 19];
 
 // include sensors
-var oMPU6050 = require("lib/mpu6050");
-var oMS5611 = require("lib/ms5611");
+var oMPU6050 = require("./lib/mpu6050");
+var oMS5611 = require("./lib/ms5611");
 
 // include websocket for external controls
 var oWS = require("ws");
