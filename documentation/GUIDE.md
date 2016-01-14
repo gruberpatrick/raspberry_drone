@@ -3,7 +3,7 @@
 Standard ESC's may be hooked up to any Raspberry PI GPIO. Usually this cable is white. Black cables provided by the ESC need to
 be hooked up to a GND (ground) pin. The red (5V) cables are not needed for the PI, as they provide external hardware with power.
 
-
+[TODO: sensor]
 
 # 2) Software INITIALIZATION
 

@@ -7,13 +7,24 @@ var oWS = require("ws");
 
 // initialize ESC's
 console.log("[QUADCOPTER] initialize");
-oESC.init([9,7,23,19]);
+oESC.init([9,7,23,19]); // initialize ESC's on given GPIO's
 
 // test ESC's
-console.log("[QUADCOPTER] send signal to ESC's for 5 seconds");
-var lCount = 0;
-oESC.setAllPWM(1240);
-setTimeout(function(){
-  oESC.setAllPWM(1000);
-}, 5000);
-console.log("[QUADCOPTER] was the test succesful? (Y/n)");
+function initTest(){
+  var lSpeed = 1250;
+  oESC.setAllPWM(lSpeed);
+  var oInterval = setInterval(function(){
+    console.log("[QUADCOPTER] setting speed to: " + lSpeed);
+    oESC.setAllPWM(lSpeed);
+    lSpeed += 5;
+    if(lSpeed == 2000){
+      lSpeed = 1250;
+      oESC.setAllPWM(lSpeed);
+      clearInterval(oInterval);
+    }
+  }, 100);
+  
+}
+initTest();
+
+
