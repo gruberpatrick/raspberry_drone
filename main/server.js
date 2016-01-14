@@ -19,7 +19,6 @@ function DroneServer(){
         this.sDroneKey = sKey;
       }
       else if(oMessage["sType"] == "command"){ // send command to quadcopter
-        console.log(oMessage);
         oNetwork.oSocket.clientSend(this.sDroneKey, oClient.sLastMessage);
       }
     }.bind(this), function(oErr){
