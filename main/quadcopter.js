@@ -21,6 +21,6 @@ oNetwork.oSocket.connectWebSocket("192.168.1.16", 4444, function(){
   // error
   console.log(oErr);
 });
-oNetwork.serverSend(JSON.stringify({init:true,sType:"quadcopter"}));
+oNetwork.oSocket.serverSend(JSON.stringify({init:true,sType:"quadcopter"}));
 
 
