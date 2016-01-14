@@ -50,6 +50,7 @@ function Quadcopter(){
   // FUNCTION
   // make quadcopter ascend
   this.ascend = function(lValue){
+    console.log(lValue);
     typeof lValue == "undefined" ? oESC.incDecAllESC(5, true) : oESC.setAllESC(lValue);
   };
   
