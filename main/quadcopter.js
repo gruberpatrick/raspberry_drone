@@ -34,8 +34,9 @@ function Quadcopter(){
   // FUNCTION
   // analyze command and decide how to execute
   this.executeCommand = function(sCommand){
-    console.log("[QUADCOPTER] command:" + sCommand);
     var aPieces = sCommand.split("=");
+    console.log("[QUADCOPTER] command:");
+    console.log(aPieces);
     if(aPieces[0] == "up")
       aPieces.length == 2 ? this.ascend(aPieces[1]) : this.ascend();
     else if(aPieces[0] == "down")
