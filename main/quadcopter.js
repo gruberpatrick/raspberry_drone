@@ -7,6 +7,7 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 // ###############################################################################
 function Quadcopter(){
 
+  // FUNCTION
   // initialize quadcopter
   this.initialize = function(){
     // initialize ESC's
@@ -17,17 +18,59 @@ function Quadcopter(){
       // connected to server
       console.log("[QUADCOPTER] connected to server");
       oNetwork.oSocket.serverSend(JSON.stringify({init:true,sType:"quadcopter"}));
-    }, function(oLastConnection, lFlags){
+    }.bind(this), function(oLastConnection, lFlags){
       // message from server
-      console.log("[QUADCOPTER] message from server:\nlFlag -> " + lFlags);
-      console.log(oLastConnection);
-    }, function(oErr){
+      // analyze command
+      var oMessage = JSON.parse(oLastConnection.sLastMessage);
+      if(oMessage["sType"] == "command"){
+        this.executeCommand(oMessage["sCommand"]);
+      }
+    }.bind(this), function(oErr){
       // error
       console.log(oErr);
-    });
+    }.bind(this));
   };
   
-  // fake constructor
+  // FUNCTION
+  // analyze command and decide how to execute
+  this.executeCommand = function(sCommand){
+    var aPieces = sCommand.split("=");
+    if(aPieces[0] == "up")
+      aPieces.length == 2 ? this.ascend(aPieces[1]) : this.ascend();
+    else if(aPieces[0] == "down")
+      aPieces.length == 2 ? this.descend(aPieces[1]) : this.descend();
+    else if(aPieces[0] == "hover")
+      this.hover();
+      
+    this.stabilize();
+  };
+  
+  // FUNCTION
+  // make quadcopter ascend
+  this.ascend = function(lValue){
+    typeof lValue == "undefined" ? oESC.incDecAllESC(5, true) : oESC.setAllESC(lValue);
+  };
+  
+  // FUNCTION
+  // make quadcopter descend
+  this.descend = function(lValue){
+    typeof lValue == "undefined" ? oESC.incDecAllESC(5, false) : oESC.setAllESC(lValue);
+  };
+  
+  // FUNCTION
+  // make quadcopter hover
+  this.hover = function(){
+    // TODO: integrate sensor values to hover
+  };
+  
+  // FUNCTION
+  // stabilize quadcopter
+  this.stabilize = function(){
+    // TODO: stabilize quadcopter based on sensor data
+  };
+  
+  // CONSTRUCTOR
+  // fake constructor call
   this.initialize();
 
 }
