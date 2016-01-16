@@ -23,6 +23,14 @@ if(sTest == "rotation"){
     console.log("x:%d\ty:%d\tz:%d", oData[0], oData[1], oData[2]);
   }, 100);
 
+}else if(sTest == "acceleration-angle"){
+  
+  console.log("[SENSOR] check acceleration angle");
+  setInterval(function(){
+    var oData = mpu6050.getAccelerationAngles();
+    console.log("x:%d\ty:%d", oData[0], oData[1]);
+  }, 100);
+  
 }else if(sTest == "temperature"){
 
   console.log("[SENSOR] check temperature");
