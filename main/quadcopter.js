@@ -34,6 +34,10 @@ function Quadcopter(){
       // error
       console.log(oErr);
     }.bind(this));
+    // try to stabilize quadcopter every 100ms
+    setInterval(function(){
+      this.stabilize();
+    }.bind(this), 100);
   };
   
   // FUNCTION
@@ -48,7 +52,6 @@ function Quadcopter(){
       aPieces.length == 2 ? this.descend(parseInt(aPieces[1])) : this.descend();
     else if(aPieces[0] == "hover")
       this.hover();
-      
     this.stabilize();
   };
   
@@ -74,6 +77,16 @@ function Quadcopter(){
   // stabilize quadcopter
   this.stabilize = function(){
     // TODO: stabilize quadcopter based on sensor data
+    // get all angles
+    var aData = oMPU6050.getAccelerationAngles();
+    // get average of ESC's
+    var lESCAverage = 0;
+    for(var lIndex in oESC.oESC) lESCAverage += oESC.oESC[lIndex].lValue;
+    lESCAverage /= 4;
+    // check quadcopter tendency
+    if( (aData[0] >= -1.5 && aData[0] <= 1.5) && (aData[1] >= -1.5 && aData[1] <= 1.5) )
+      return;
+    // modify off ESC based on average
   };
   
   // CONSTRUCTOR
