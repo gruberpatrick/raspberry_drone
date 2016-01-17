@@ -27,6 +27,7 @@ function Quadcopter(){
       if(oMessage["sType"] == "command"){
         this.executeCommand(oMessage["sCommand"]);
       }
+      oNetwork.oSocket.serverSend(JSON.stringify({sType:"data",oData:{oESC.oESC}}));
     }.bind(this), function(oErr){
       // error
       console.log(oErr);
