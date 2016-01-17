@@ -14,7 +14,7 @@ function Quadcopter(){
   this.initialize = function(){
     // initialize ESC's
     console.log("[QUADCOPTER] initialize");
-    oESC.init([9,7,23,19]); // initialize ESC's on given GPIO's
+    oESC.init([26,27,17,19]); // initialize ESC's on given GPIO's
     // connect to server and identify
     oNetwork.oSocket.connectWebSocket("192.168.1.16", 4444, function(){
       // connected to server
@@ -53,13 +53,13 @@ function Quadcopter(){
   // FUNCTION
   // make quadcopter ascend
   this.ascend = function(lValue){
-    typeof lValue == "undefined" ? oESC.incDecAllESC(5, true) : oESC.setAllESC(lValue);
+    typeof lValue == "undefined" ? oESC.incDecAllESC(2, true) : oESC.setAllESC(lValue);
   };
   
   // FUNCTION
   // make quadcopter descend
   this.descend = function(lValue){
-    typeof lValue == "undefined" ? oESC.incDecAllESC(5, false) : oESC.setAllESC(lValue);
+    typeof lValue == "undefined" ? oESC.incDecAllESC(2, false) : oESC.setAllESC(lValue);
   };
   
   // FUNCTION

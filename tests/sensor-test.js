@@ -70,7 +70,7 @@ if(sTest == "rotation"){
 
   setInterval(function(){
     var oDegree = mpu6050.getRotationDegree();
-    var oAcceleration = mpu6050.getAccelerationPercentage();
+    var oAcceleration = mpu6050.getAccelerationZeroG();
     if(oConnected != null){
       try{
         oConnected.send(JSON.stringify({degree:oDegree,acceleration:oAcceleration}));
