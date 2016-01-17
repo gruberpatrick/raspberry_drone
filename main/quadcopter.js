@@ -15,6 +15,8 @@ function Quadcopter(){
     // initialize ESC's
     console.log("[QUADCOPTER] initialize");
     oESC.init([26,27,17,19]); // initialize ESC's on given GPIO's
+    // initialize MPU6050
+    oMPU6050.init(1);
     // connect to server and identify
     oNetwork.oSocket.connectWebSocket("192.168.1.16", 4444, function(){
       // connected to server
