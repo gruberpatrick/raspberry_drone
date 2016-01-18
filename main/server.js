@@ -15,6 +15,7 @@ function DroneServer(){
       console.log("[SERVER] connection established");
     }.bind(this), function(sKey, oClient){
       var oMessage = JSON.parse(oClient.sLastMessage);
+      console.log(oMessage);
       if(typeof oMessage["init"] != "undefined" && oMessage["init"]){ // check if initial definition
         oNetwork.oSocket.setClientValue(sKey, {sType: oMessage["sType"]});
         this.sDroneKey = sKey;
@@ -27,6 +28,15 @@ function DroneServer(){
       // error
       console.log(oErr);
     });
+
+    var lCount = 0;
+    var oInterval = setInterval(function(){
+      if(this.sDroneKey != "")
+        oNetwork.oSocket.clientSend(this.sDroneKey, JSON.stringify({sType:"command",sCommand:"up"}));
+      if(lCount == 250)
+        clearInterval(oInterval);
+    }, 500);
+
   };
 
   // CONSTRUCTOR

@@ -106,6 +106,7 @@ function Quadcopter(){
     else if(aData[1] > 1)
       lESC = 0x03;
     // modify off ESC based on average
+    console.log(lESC);
   };
   
   // CONSTRUCTOR
