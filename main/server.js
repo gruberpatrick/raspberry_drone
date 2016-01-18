@@ -18,9 +18,9 @@ function DroneServer(){
       if(typeof oMessage["init"] != "undefined" && oMessage["init"]){ // check if initial definition
         oNetwork.oSocket.setClientValue(sKey, {sType: oMessage["sType"]});
         this.sDroneKey = sKey;
-      }else if(sKey == this.sDroneKey){
+      }else if(oMessage["sType"] == "status"){
         oNetwork.oSocket.clientBroadcast(oClient.sLastMessage);
-			}else if(oMessage["sType"] == "command"){ // send command to quadcopter
+      }else if(oMessage["sType"] == "command"){ // send command to quadcopter
         oNetwork.oSocket.clientSend(this.sDroneKey, oClient.sLastMessage);
       }
     }.bind(this), function(oErr){
