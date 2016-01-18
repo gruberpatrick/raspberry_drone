@@ -8,7 +8,7 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 function Quadcopter(){
   
   // ATTRIBUTES -----------------------------------------------------------------
-  var aESCPins = [26,27,17,19];
+  var aESCPins = [26,27,17,19]; // pins connected to RPI [BACK LEFT, FRONT LEFT, FRONT RIGHT, BACK RIGHT]
 
   // FUNCTION -----------------------------------------------------------------
   // initialize quadcopter
