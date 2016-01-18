@@ -8,7 +8,9 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 function Quadcopter(){
   
   // ATTRIBUTES -----------------------------------------------------------------
-  var aESCPins = [26,27,17,19];
+  this.aESCPins = [26,27,17,19];
+  this.lXAdjustRatio = 12.5;
+  this.lYAdjustRatio = 14.286;
 
   // FUNCTION -----------------------------------------------------------------
   // initialize quadcopter
@@ -30,7 +32,7 @@ function Quadcopter(){
       if(oMessage["sType"] == "command"){
         this.executeCommand(oMessage["sCommand"]);
       }
-      oNetwork.oSocket.serverSend(JSON.stringify({sType:"status",oData:{"oESC":oESC.oESC}}));
+      oNetwork.oSocket.serverSend(JSON.stringify({sType:"status",oData:{"oESC":oESC.getESC(),"oMPU6050":oMPU6050}}));
     }.bind(this), function(oErr){
       // error
       console.log(oErr);
@@ -80,33 +82,35 @@ function Quadcopter(){
     // TODO: stabilize quadcopter based on sensor data
     // get all angles
     var aData = oMPU6050.getAccelerationAngles();
-    // get average of ESC's
-    var lESCAverage = 0;
-    for(var lIndex in oESC.oESC) lESCAverage += oESC.oESC[lIndex].lValue;
-    lESCAverage /= 4;
     // check if no need to adjust yet
-    if( (aData[0] >= -1.5 && aData[0] <= 1.5) && (aData[1] >= -1.5 && aData[1] <= 1.5) )
+    if( (aData[0] >= -1.0 && aData[0] <= 1.0) && (aData[1] >= -1.0 && aData[1] <= 1.0) )
       return;
-    // check ESC to adjust
-    var lESC = 0x00;
+    // reset all adjusts
+    for(var lIndex in oESC.oESC) oESC.oESC[lIndex].lAdjust = 0;
+    // check ESC's to adjust
+    console.log(aData[0] + " - " + aData[1]);
+    var lESC = -1;
     if(aData[0] < 0 && aData[1] > 0)
-      lESC = 0x01;
+      lESC = 26;
     else if(aData[0] > 0 && aData[1] > 0)
-      lESC = 0x02;
+      lESC = 27;
     else if(aData[0] > 0 && aData[1] < 0)
-      lESC = 0x04;
+      lESC = 17;
     else if(aData[0] < 0 && aData[1] < 0)
-      lESC = 0x08;
-    else if(aData[0] < 0)
-      lESC = 0x09;
-    else if(aData[0] > 0)
-      lESC = 0x06;
-    else if(aData[1] < 1)
-      lESC = 0x0C;
-    else if(aData[1] > 1)
-      lESC = 0x03;
+      lESC = 17;
     // modify off ESC based on average
-    console.log(lESC);
+    if(lESC == -1)
+      return;
+    console.log("[QUADCOPTER] modify: " + lESC);
+    if(aData[0] < 0)
+      aData[0] *= -1;
+    if(aData[1] < 0)
+      aData[1] *= -1;
+    var lAdjust = aData[0];
+    if(aData[1] > aData[0])
+      lAdjust = aData[1];
+    oESC.oESC[lESC].lAdjust = lAdjust * this.lXAdjustRatio;
+    oESC.setAllESC();
   };
   
   // CONSTRUCTOR
