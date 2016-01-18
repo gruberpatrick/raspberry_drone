@@ -8,13 +8,14 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 function Quadcopter(){
   
   // ATTRIBUTES -----------------------------------------------------------------
+  var aESCPins = [26,27,17,19];
 
   // FUNCTION -----------------------------------------------------------------
   // initialize quadcopter
   this.initialize = function(){
     // initialize ESC's
     console.log("[QUADCOPTER] initialize");
-    oESC.init([26,27,17,19]); // initialize ESC's on given GPIO's
+    oESC.init(this.aESCPins); // initialize ESC's on given GPIO's
     // initialize MPU6050
     oMPU6050.init(1);
     // connect to server and identify
@@ -83,9 +84,27 @@ function Quadcopter(){
     var lESCAverage = 0;
     for(var lIndex in oESC.oESC) lESCAverage += oESC.oESC[lIndex].lValue;
     lESCAverage /= 4;
-    // check quadcopter tendency
+    // check if no need to adjust yet
     if( (aData[0] >= -1.5 && aData[0] <= 1.5) && (aData[1] >= -1.5 && aData[1] <= 1.5) )
       return;
+    // check ESC to adjust
+    var lESC = 0x00;
+    if(aData[0] < 0 && aData[1] > 0)
+      lESC = 0x01;
+    else if(aData[0] > 0 && aData[1] > 0)
+      lESC = 0x02;
+    else if(aData[0] > 0 && aData[1] < 0)
+      lESC = 0x04;
+    else if(aData[0] < 0 && aData[1] < 0)
+      lESC = 0x08;
+    else if(aData[0] < 0)
+      lESC = 0x09;
+    else if(aData[0] > 0)
+      lESC = 0x06;
+    else if(aData[1] < 1)
+      lESC = 0x0C;
+    else if(aData[1] > 1)
+      lESC = 0x03;
     // modify off ESC based on average
   };
   
