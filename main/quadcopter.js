@@ -8,6 +8,7 @@ var oNetwork = require("../lib/HandyJS/lib/network-p");
 function Quadcopter(){
   
   // ATTRIBUTES -----------------------------------------------------------------
+
   this.aESCPins = [26,27,17,19];
   this.lXAdjustRatio = 12.5;
   this.lYAdjustRatio = 14.286;
