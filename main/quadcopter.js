@@ -12,6 +12,7 @@ function Quadcopter(){
   this.aESCPins = [26,27,17,19];
   this.lXAdjustRatio = 12.5;
   this.lYAdjustRatio = 14.286;
+  this.aAccelerationAngles = [0,0];
 
   // FUNCTION -----------------------------------------------------------------
   // initialize quadcopter
@@ -21,6 +22,7 @@ function Quadcopter(){
     oESC.init(this.aESCPins); // initialize ESC's on given GPIO's
     // initialize MPU6050
     oMPU6050.init(1);
+    this.aAccelerationAngles = oMPU6050.getAccelerationAngles();
     // connect to server and identify
     oNetwork.oSocket.connectWebSocket("192.168.1.16", 4444, function(){
       // connected to server
@@ -83,6 +85,9 @@ function Quadcopter(){
     // TODO: stabilize quadcopter based on sensor data
     // get all angles
     var aData = oMPU6050.getAccelerationAngles();
+    aData[0] -= this.aAccelerationAngles[0];
+    aData[1] -= this.aAccelerationAngles[1];
+    console.log(oData[0] + " - " + oData[1]);
     // check if no need to adjust yet
     if( (aData[0] >= -1.0 && aData[0] <= 1.0) && (aData[1] >= -1.0 && aData[1] <= 1.0) )
       return;
@@ -111,6 +116,7 @@ function Quadcopter(){
     if(aData[1] > aData[0])
       lAdjust = aData[1];
     oESC.oESC[lESC].lAdjust = lAdjust * this.lXAdjustRatio;
+    console.log(oESC.getESC());
     oESC.setAllESC();
   };
   
